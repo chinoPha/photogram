@@ -28,11 +28,13 @@ public class User {
 	
 	@Column(length = 20, unique=true) //제약조건을 걸어줌
 	private String username;
+	@Column(nullable = false)
 	private String password;
-	
+	@Column(nullable = false)
 	private String name;
 	private String website;
 	private String bio; //자기소개
+	@Column(nullable = false)
 	private String email;
 	private String phone;
 	private String gender;
