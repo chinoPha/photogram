@@ -8,4 +8,4 @@
 - 2022.02.10
 \ SecurityConfig.java 클래스 생성 \ 시큐리티 세팅 설정\ CSRF 토큰 검사 \ signup.jsp\ AuthController.java \User 모델 만들기
 - 2022.02.11
-\ 회원가입 완료
+\ 회원가입 완료 \ 비밀번호 해시, 네임 UNIQ 제약조건 부여,권한 부여 \
