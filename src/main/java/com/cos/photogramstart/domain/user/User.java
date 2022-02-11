@@ -9,11 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 //JPA -Java Persistence API(자바로 데이터를 영구적으로 저장(DB)할 수 있는 API를 제공)
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor //빈 생성자
 @Data
