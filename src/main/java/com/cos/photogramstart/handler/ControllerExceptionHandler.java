@@ -1,13 +1,12 @@
 package com.cos.photogramstart.handler;
 
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.utill.Script;
@@ -29,7 +28,13 @@ public class ControllerExceptionHandler {
 	}
 	@ExceptionHandler(CustomValidationApiException.class) // RuntimeException이 발동하는 모든 Exception을 validationException함수가 가로챔
 	public ResponseEntity<?> validationApiException(CustomValidationApiException e) { //<>제네릭 사용시 <?>를 사용하면 알아서 찾아줌.
-		System.out.println("===========================나 실행더ㅣㅁ???????");
+		System.out.println("===========================나 실행됨???????");
 		return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(), e.getErroMap()), HttpStatus.BAD_REQUEST); // body, 상태코드
 	}
+	
+	@ExceptionHandler(CustomApiException.class) 
+	public ResponseEntity<?> apiException(CustomApiException e) { 
+		return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(),null), HttpStatus.BAD_REQUEST); 
+	}
+	
 }
