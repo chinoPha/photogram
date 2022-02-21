@@ -1,6 +1,7 @@
 package com.cos.photogramstart.domain.image;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,9 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 
-import com.cos.photogramstart.domain.subscribe.Subscribe;
+import com.cos.photogramstart.domain.comment.Comment;
+import com.cos.photogramstart.domain.likes.Likes;
 import com.cos.photogramstart.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -37,11 +42,25 @@ public class Image {//N, 1
 	@ManyToOne(fetch = FetchType.EAGER) //이미지를 select하면 조인해서 User 정보를 같이 들고옴.
 	private User user; //1, 1
 	
-	// 이미지 좋아요 
+	
+	// 이미지 좋아요
+	@JsonIgnoreProperties({"image"})// 무한참조 막아줌.
+	@OneToMany(mappedBy = "image")
+	private List<Likes> likes;
+	
+	@Transient // DB에 칼럼이 만들어지지 않는다.
+	private boolean likeState;
+	
+	@Transient
+	private int likeCount;
 	
 	// 댓글 
+	@OrderBy("id DESC")
+	@JsonIgnoreProperties({"image"})
+	@OneToMany(mappedBy = "image") //컬렉션은 원투매니로 만들면 됨.
+	private List<Comment> comments;
 	
-private LocalDateTime createDate;  // 항상 데이터 베이스에는 시간이 들어가야합니다.
+	private LocalDateTime createDate;  // 항상 데이터 베이스에는 시간이 들어가야합니다.
 	
 	@PrePersist 
 	public void createDate() {
