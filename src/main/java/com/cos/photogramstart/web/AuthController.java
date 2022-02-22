@@ -54,23 +54,15 @@ public class AuthController {
 																									// value(x-www-form-urlencoded)
 		// @Valid SignupDto signupDto 서 오류가 발생하면 bindingResult에 getFieldErrors()라는 컬렉션에
 		// 모아줌
-		if (bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-
-			for (FieldError error : bindingResult.getFieldErrors()) { // for문을 돌면서 컬렉션의 오류를 error에 담아줌
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			throw new CustomValidationException("유효성 검사 실패함.",errorMap);
-		} else {
+		
 			log.info(signupDto.toString());
 			// User <- SignupDto
 			User user = signupDto.toEntity();
-			User userEntity = authService.회원가입(user); // 회원가입을 하고 userEntity에 받아짐
-			System.out.println(userEntity);
+			authService.회원가입(user); // 회원가입을 하고 userEntity에 받아짐
+			//System.out.println(userEntity);
 			// log.info(user.toString());
 			return "auth/signin"; // 회원가입이 성공하면 로그인 페이지로
 		}
 
 	}
 
-}
